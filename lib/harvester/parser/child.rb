@@ -1,10 +1,8 @@
 module Harvester
   class Parser
     class Child < Children
-      def parse(node)
-        result = super
-        result[name] = result[name].first
-        result
+      def _parse(*args)
+        super.first
       end
     end
   end

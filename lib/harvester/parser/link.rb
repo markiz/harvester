@@ -1,10 +1,17 @@
 module Harvester
   class Parser
     class Link < Base
-      def parse(node)
-        links = node.css(*selectors).select {|link| link[:href] && match_any?(link[:href], link_regex) }
+      def _parse(node)
+        link = node.css(*selectors).
+                  select {|link| link[:href] &&
+                                 match_any?(link[:href], link_regex) }.
+                  first
+        link && link[:href]
+      end
+
+      def default_options
         {
-          name => links.first[:href]
+          :selectors => "a"
         }
       end
 
@@ -13,7 +20,7 @@ module Harvester
       end
 
       def match_any?(string, regex)
-        regex.any? {|r| r.match(string) }
+        regex.any? {|r| r =~ string }
       end
     end
   end

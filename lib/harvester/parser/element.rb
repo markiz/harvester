@@ -1,10 +1,9 @@
 module Harvester
   class Parser
     class Element < Base
-      def parse(node)
-        {
-          name => node.at_css(*selectors).text
-        }
+      def _parse(node)
+        element = node.at_css(*selectors)
+        element.text if element
       end
     end
   end

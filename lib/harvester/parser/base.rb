@@ -8,13 +8,16 @@ module Harvester
       end
 
       def parse(node)
-        {}
+        {
+          name => _parse(node)
+        }
       end
 
-      protected
+      def _parse(node)
+      end
 
       def selectors
-        @selectors ||= Array(@options[:selectors] || @options[:selector])
+        @selectors ||= Array(options[:selector] || options[:selectors])
       end
 
       def default_options

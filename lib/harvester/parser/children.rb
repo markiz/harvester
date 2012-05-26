@@ -1,20 +1,15 @@
 module Harvester
   class Parser
     class Children < Base
-      attr_reader :delegate
-
-      def initialize(name, options = {}, &block)
+      def initialize(*args, &block)
         super
-        @delegate = Parser.new(&block)
+        @delegated_parser = Parser.new(&block)
       end
 
-      def parse(node)
-        parsed_children = node.css(*selectors).inject([]) do |result, parsed_node|
-          result << @delegate.parse(parsed_node)
+      def _parse(node)
+        node.css(*selectors).map do |child_node|
+          @delegated_parser.parse(child_node)
         end
-        {
-          name => parsed_children
-        }
       end
     end
   end
