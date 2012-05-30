@@ -6,6 +6,7 @@ require 'harvester/parser/children'
 require 'harvester/parser/child'
 require 'harvester/parser/links'
 require 'harvester/parser/link'
+require 'harvester/parser/links_with_uid'
 require 'harvester/parser/link_with_uid'
 
 module Harvester
