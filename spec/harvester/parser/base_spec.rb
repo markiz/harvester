@@ -24,4 +24,18 @@ describe Harvester::Parser::Base do
       subject.parse("").should == {:test => :hello}
     end
   end
+
+  describe "#after_parse" do
+    it "calls after hook and uses its result when given" do
+      after_hook = proc {|*args| @called_with = args; :result }
+      subject = described_class.new(:test, :after_parse => after_hook)
+      subject.after_parse(1, {}).should == :result
+      @called_with.should == [1, {}]
+    end
+
+    it "returns last input arg when after hook is undefined" do
+      subject = described_class.new(:test)
+      subject.after_parse(1, {}).should == {}
+    end
+  end
 end

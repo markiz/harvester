@@ -12,5 +12,11 @@ describe Harvester::Parser::Element do
     it "returns nil when there is no matching node" do
       subject._parse(Nokogiri::HTML("")).should be_nil
     end
+
+    it "calls after_parse hook when given" do
+      hook = lambda {|node, text| text + ": Hello"}
+      subject.options[:after_parse] = hook
+      subject._parse(doc).should == "Number one: Hello"
+    end
   end
 end

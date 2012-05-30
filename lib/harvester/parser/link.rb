@@ -6,7 +6,9 @@ module Harvester
                   select {|link| link[:href] &&
                                  match_any?(link[:href], link_regex) }.
                   first
-        link && link[:href]
+        if link && link[:href]
+          after_parse(link, link[:href])
+        end
       end
 
       def default_options

@@ -7,5 +7,11 @@ describe Harvester::Parser::Children do
     it "extracts children recursively parses them" do
       subject._parse(doc).should == [{:content => "Number one"}, {:content => "Number two"}]
     end
+
+    it "calls a hook per parsed child" do
+      hook = proc {|node, parsed| parsed[:data] = :special; parsed }
+      subject.options[:after_parse] = hook
+      subject._parse(doc).should == [{:content => "Number one", :data => :special}, {:content => "Number two", :data => :special}]
+    end
   end
 end
