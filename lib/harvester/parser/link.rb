@@ -4,11 +4,7 @@ module Harvester
   class Parser
     class Link < Base
       def _parse(node)
-        link = node.css(*selectors).
-                  select {|link| link[:href] &&
-                                 valid_url?(link[:href]) &&
-                                 match_any?(link[:href], link_regex) }.
-                  first
+        link = find_matching_link(node)
         after_parse(link, link[:href]) if link
       end
 
@@ -16,6 +12,17 @@ module Harvester
         {
           :selectors => "a"
         }
+      end
+
+      def find_matching_link(node)
+        find_matching_links(node).first
+      end
+
+      def find_matching_links(node)
+        node.css(*selectors).
+            select {|link| link[:href] &&
+                           valid_url?(link[:href]) &&
+                           match_any?(link[:href], link_regex) }
       end
 
       def link_regex

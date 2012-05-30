@@ -5,6 +5,7 @@ require 'harvester/parser/text'
 require 'harvester/parser/children'
 require 'harvester/parser/child'
 require 'harvester/parser/link'
+require 'harvester/parser/link_with_uid'
 
 module Harvester
   class Parser
