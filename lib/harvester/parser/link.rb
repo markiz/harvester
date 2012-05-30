@@ -2,21 +2,9 @@ require 'addressable/uri'
 
 module Harvester
   class Parser
-    class Link < Base
+    class Link < Links
       def _parse(node)
-        link = LinkFinder.find_matching_link(node, selectors, link_regex)
-        after_parse(link, link[:href]) if link
-      end
-
-      def default_options
-        {
-          :selectors  => "a",
-          :link_regex => /.+/
-        }
-      end
-
-      def link_regex
-        @link_regex ||= Array(options[:link_regex])
+        super.first
       end
     end
   end
