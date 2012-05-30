@@ -1,4 +1,4 @@
-require 'uri'
+require 'addressable/uri'
 
 module Harvester
   class Parser
@@ -27,8 +27,9 @@ module Harvester
       end
 
       def valid_url?(url)
-        @@http_regexp ||= URI.regexp(['http', 'https'])
-        url.match(@@http_regexp).begin(0) == 0
+        ["http", "https", nil].include?(Addressable::URI.parse(url).scheme)
+      rescue Addressable::URI::InvalidURIError
+        false
       end
     end
   end

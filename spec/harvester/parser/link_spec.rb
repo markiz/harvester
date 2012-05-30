@@ -19,5 +19,10 @@ describe Harvester::Parser::Link do
       node = Nokogiri::HTML("<body><a href='http://twitter.com/johndoe'>Twitter</a><a href='javascript:alert(\"http://github.com/markiz\")'>Github</a></body>")
       subject._parse(node).should == nil
     end
+
+    it "works with relative links" do
+      node = Nokogiri::HTML("<body><a href='http://twitter.com/johndoe'>Twitter</a><a href='/github.com/me'>Github</a></body>")
+      subject._parse(node).should == "/github.com/me"
+    end
   end
 end
