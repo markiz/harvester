@@ -10,7 +10,8 @@ module Harvester
 
       def default_options
         {
-          :selectors => "a"
+          :selectors  => "a",
+          :link_regex => /.+/
         }
       end
 

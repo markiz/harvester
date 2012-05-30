@@ -14,16 +14,26 @@ module Harvester
         end
       end
 
+      def default_options
+        {
+          :uid_keep_params => :all,
+          :url_key         => :"#{name}_url",
+          :uid_key         => :"#{name}_uid",
+          :link_regex      => /.+/,
+          :selectors       => "a"
+        }
+      end
+
       def uid_keep_params
-        @uid_keep_params ||= options[:uid_keep_params] || :all
+        @uid_keep_params ||= options[:uid_keep_params]
       end
 
       def url_key
-        @url_key ||= options[:url_key] || :"#{name}_url"
+        @url_key ||= options[:url_key]
       end
 
       def uid_key
-        @uid_key ||= options[:uid_key] || :"#{name}_uid"
+        @uid_key ||= options[:uid_key]
       end
     end
   end
