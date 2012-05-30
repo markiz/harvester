@@ -20,6 +20,22 @@ describe Harvester::Parser::LinkWithUid do
       }
     end
 
+    it "allows using :all for keep_params for uid generation" do
+      subject.options[:uid_keep_params] = :all
+      subject.parse(doc).should == {
+        :forum_url => "forumdisplay.php?f=32",
+        :forum_uid => "forumdisplay.php?f=32"
+      }
+    end
+
+    it "allows using :all_without_query for keep_params for uid generation" do
+      subject.options[:uid_keep_params] = :all_without_query
+      subject.parse(doc).should == {
+        :forum_url => "forumdisplay.php",
+        :forum_uid => "forumdisplay.php"
+      }
+    end
+
     it "calls an after_parse hook" do
       hook = proc {|node, parsed| parsed[:forum_url] = "/"; parsed }
       subject.options[:after_parse] = hook

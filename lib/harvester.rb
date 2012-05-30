@@ -1,4 +1,5 @@
 require "harvester/version"
+require "harvester/util"
 require "harvester/parser"
 
 module Harvester
