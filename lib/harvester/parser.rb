@@ -27,11 +27,14 @@ module Harvester
     end
 
     PARSER_NODES_MAP = {
-      :element  => Element,
-      :children => Children,
-      :child    => Child,
-      :link     => Link,
-      :text     => Text
+      :element        => Element,
+      :children       => Children,
+      :child          => Child,
+      :links          => Links,
+      :link           => Link,
+      :links_with_uid => LinksWithUid,
+      :link_with_uid  => LinkWithUid,
+      :text           => Text
     }.freeze
 
     PARSER_NODES_MAP.each do |node_type, node_class|
