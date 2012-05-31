@@ -8,6 +8,7 @@ require 'harvester/parser/links'
 require 'harvester/parser/link'
 require 'harvester/parser/links_with_uid'
 require 'harvester/parser/link_with_uid'
+require 'harvester/parser/date'
 
 module Harvester
   class Parser
@@ -34,7 +35,8 @@ module Harvester
       :link           => Link,
       :links_with_uid => LinksWithUid,
       :link_with_uid  => LinkWithUid,
-      :text           => Text
+      :text           => Text,
+      :date           => Date
     }.freeze
 
     PARSER_NODES_MAP.each do |node_type, node_class|

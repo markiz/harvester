@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'spec_helper'
 
 describe Harvester do
@@ -48,6 +49,7 @@ describe Harvester do
         p.children :posts, :selectors => "div.post" do |post|
           post.element :title, :selectors => "h3"
           post.element :body, :selectors => "div.content"
+          post.date :published_at, :selectors => "p.author", :regex => /» (.*)$/
           post.link_with_uid :link,
               :selectors       => "p.author > a",
               :link_regex      => /viewtopic\.php.*p=\d+/,
@@ -76,6 +78,7 @@ describe Harvester do
       posts[0][:author][:link][:url].should == "./memberlist.php?mode=viewprofile&u=1345591"
       posts[0][:author][:link][:uid].should == "viewprofile_1345591"
       posts[0][:author][:name].should == "blocum"
+      posts[0][:published_at].should be_within(24*3600).of(Time.utc(2012, 5, 29, 12, 9))
     end
 
   end

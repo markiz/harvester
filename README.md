@@ -60,6 +60,14 @@ pp harvester.parse(article)
 
 See other examples in `examples` folder.
 
+## Dependencies
+
+* Ruby (currently 1.9)
+* Nokogiri
+* Addressable
+* Chronic18n if you want to use date parsing
+    * Use [my fork](https://github.com/markiz/chronic18n) if you desire to use russian locale for dates
+
 ## Feedback
 
 Use github issues or contact me directly by mail (markizko+harvester@gmail.com)

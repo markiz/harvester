@@ -4,13 +4,14 @@ module Harvester
     class Default
       class <<self
         def parse(string)
-          Chronic18n.parse(prepare_time_string(string), locale)
+          Chronic18n.parse(prepare_time_string(string.to_s), locale)
         end
 
         def prepare_time_string(string)
           string = string.respond_to?(:mb_chars) ? string.mb_chars.downcase : string.downcase
-          string.gsub(/[^[:alnum:],.:\-\s]/, '').
+          string.gsub(/[^[:alnum:],.:\-\s\/]/, '').
                  gsub(/[\-]/, ' ').
+                 gsub(/mon|tue|wed|thu|fri|sat|sun|monday|tuesday|wednesday|thursday|friday|saturday|sunday/, '').
                  strip.
                  to_s
         end

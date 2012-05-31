@@ -4,6 +4,13 @@ describe Harvester::DateParser do
   describe "with default locale" do
     it "parses various formats of dates" do
       described_class.parse("15 Jan 2010 05:30").should be_within(24*3600).of(Time.utc(2010, 1, 15, 5, 30))
+      described_class.parse("01/15/2010 05:30").should be_within(24*3600).of(Time.utc(2010, 1, 15, 5, 30))
+    end
+
+    it "returns nil for various empty values" do
+      described_class.parse("").should be_nil
+      described_class.parse("   ").should be_nil
+      described_class.parse(nil).should be_nil
     end
   end
 
