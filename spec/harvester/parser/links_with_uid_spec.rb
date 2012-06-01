@@ -32,5 +32,13 @@ describe Harvester::Parser::LinksWithUid do
       subject.options[:after_parse] = hook
       subject._parse(doc).first[:url].should == "/"
     end
+
+    it "allows specifying whether to cut fragment from link" do
+      html = Nokogiri::HTML("<a href='/forumdisplay.php?f=1#p123'>forum</a>")
+      subject.options[:keep_fragment] = true
+      subject._parse(html).first[:url].should == "/forumdisplay.php?f=1#p123"
+      subject.options[:keep_fragment] = false
+      subject._parse(html).first[:url].should == "/forumdisplay.php?f=1"
+    end
   end
 end
