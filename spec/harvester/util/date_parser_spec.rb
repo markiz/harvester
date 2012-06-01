@@ -9,6 +9,12 @@ describe Harvester::DateParser do
       described_class.parse("01-15-2010 - 05:30").should be_within(24*3600).of(Time.utc(2010, 1, 15, 5, 30))
     end
 
+    it "doesn't return dates from the future" do
+      now = Time.utc(2012, 2, 1)
+      Chronic.now = now
+      described_class.parse("5 Jan").should be_within(24*3600).of(Time.utc(2012, 1, 5))
+    end
+
     it "returns nil for various empty values" do
       described_class.parse("").should be_nil
       described_class.parse("   ").should be_nil

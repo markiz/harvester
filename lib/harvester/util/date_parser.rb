@@ -4,7 +4,11 @@ module Harvester
     class Default
       class <<self
         def parse(string)
-          Chronic18n.parse(prepare_time_string(string.to_s), locale)
+          result = Chronic18n.parse(prepare_time_string(string.to_s), locale)
+          if result && result.year > Time.now.year
+            result = Time.mktime(Time.now.year, result.month, result.day, result.hour, result.min, result.sec)
+          end
+          result
         end
 
         def prepare_time_string(string)
