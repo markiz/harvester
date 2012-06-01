@@ -9,8 +9,9 @@ module Harvester
 
         def prepare_time_string(string)
           string = string.respond_to?(:mb_chars) ? string.mb_chars.downcase : string.downcase
-          string.gsub(/[^[:alnum:],.:\-\s\/]/, '').
-                 gsub(/[\-]/, ' ').
+          string.gsub(/[^[:alnum:],.:\-\s\/]/, ' ').
+                 gsub(/\s[\-]\s/, ' ').
+                 gsub(/\s+/, ' ').
                  gsub(/mon|tue|wed|thu|fri|sat|sun|monday|tuesday|wednesday|thursday|friday|saturday|sunday/, '').
                  strip.
                  to_s
