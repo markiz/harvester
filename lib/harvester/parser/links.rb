@@ -3,7 +3,7 @@ module Harvester
     class Links < Base
       def _parse(node)
         links = LinkFinder.find_matching_links(node, selectors, link_regex)
-        links.map {|link| after_parse(link, link[:href]) }
+        links.map {|link| after_parse(link, link[:href]) }.compact.uniq
       end
 
       def default_options

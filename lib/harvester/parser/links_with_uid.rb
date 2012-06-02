@@ -3,7 +3,7 @@ module Harvester
     class LinksWithUid < Links
       def _parse(node)
         links = LinkFinder.find_matching_links(node, selectors, link_regex)
-        links.map do |link|
+        links.map! do |link|
           url = link[:href]
           sliced_url = UrlManipulations.url_with_sliced_params(url, uid_keep_params, keep_fragment)
           sliced_uid = UrlManipulations.uid_from_sliced_params(url, uid_keep_params)
@@ -12,6 +12,7 @@ module Harvester
             :uid => sliced_uid
           })
         end
+        links.compact.uniq
       end
 
       def default_options
