@@ -10,6 +10,11 @@ describe Harvester::Parser::Date do
     it "matches an element with proper format and extracts date from it" do
       subject._parse(doc).should be_within(24*3600).of(Time.utc(2012, 3, 5, 22, 30))
     end
+
+    it "allows for before_parse hook" do
+      subject.options[:before_parse] = proc {|t| "2000/1/1" }
+      subject._parse(doc).should be_within(24*3600).of(Time.utc(2000, 1, 1))
+    end
   end
 
   describe "with russian locale" do
