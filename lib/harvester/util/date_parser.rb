@@ -4,14 +4,28 @@ module Harvester
     class Default
       class <<self
         def parse(string)
-          result = Chronic18n.parse(prepare_time_string(string.to_s), locale)
+          string = prepare_time_string(string)
+          result = parse_with_chronic(string) || parse_with_stdlib(string)
           if result && result.year > Time.now.year
             result = Time.mktime(Time.now.year, result.month, result.day, result.hour, result.min, result.sec)
           end
           result
         end
 
+        def parse_with_chronic(string)
+          Chronic18n.parse(string, locale)
+        rescue
+          nil
+        end
+
+        def parse_with_stdlib(string)
+          Time.parse(string)
+        rescue
+          nil
+        end
+
         def prepare_time_string(string)
+          string = string.to_s
           string = string.respond_to?(:mb_chars) ? string.mb_chars.downcase : string.downcase
           string.gsub(/[^[:alnum:],.:\-\s\/]/, ' ').
                  gsub(/\s[\-]\s/, ' ').
