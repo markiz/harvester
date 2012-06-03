@@ -6,7 +6,7 @@ module Harvester
       end
 
       def find_matching_links(node, selectors, link_regex)
-        node.css(*selectors).
+        node.search(*selectors).
             select {|link| link[:href] &&
                            valid_url?(link[:href]) &&
                            match_any?(link[:href], link_regex) }

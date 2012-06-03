@@ -13,5 +13,10 @@ describe Harvester::Parser::Children do
       subject.options[:after_parse] = hook
       subject._parse(doc).should == [{:content => "Number one", :data => :special}, {:content => "Number two", :data => :special}]
     end
+
+    it "supports xpath selectors" do
+      subject.options[:selectors] = "//ol/li"
+      subject._parse(doc).should == [{:content => "Number one"}, {:content => "Number two"}]
+    end
   end
 end

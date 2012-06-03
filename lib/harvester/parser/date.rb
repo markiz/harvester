@@ -2,7 +2,7 @@ module Harvester
   class Parser
     class Date < Base
       def _parse(node)
-        node.css(*selectors).map do |checked_node|
+        node.search(*selectors).map do |checked_node|
           if (match = match_any(checked_node.text, regex))
             time_string = prepare_time_string(match[regex_capture_group])
             DateParser.parse(time_string, locale)

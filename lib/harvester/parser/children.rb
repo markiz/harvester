@@ -7,7 +7,7 @@ module Harvester
       end
 
       def _parse(node)
-        children = node.css(*selectors).map do |child_node|
+        children = node.search(*selectors).map do |child_node|
           parsed = @delegated_parser.parse(child_node)
           after_parse(child_node, parsed)
         end

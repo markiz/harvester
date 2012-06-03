@@ -18,5 +18,10 @@ describe Harvester::Parser::Element do
       subject.options[:after_parse] = hook
       subject._parse(doc).should == "Number one: Hello"
     end
+
+    it "supports xpath selectors" do
+      subject.options[:selectors] = "//li[@class='t']"
+      subject._parse(doc).should == "Number one"
+    end
   end
 end

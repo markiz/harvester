@@ -40,5 +40,13 @@ describe Harvester::Parser::LinksWithUid do
       subject.options[:keep_fragment] = false
       subject._parse(html).first[:url].should == "/forumdisplay.php?f=1"
     end
+
+    it "supports xpath selectors" do
+      subject.options[:selector] = '//a'
+      subject._parse(doc).should include({
+        :url => "forumdisplay.php?f=32",
+        :uid => "32"
+      })
+    end
   end
 end

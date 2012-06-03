@@ -15,6 +15,11 @@ describe Harvester::Parser::Date do
       subject.options[:before_parse] = proc {|t| "2000/1/1" }
       subject._parse(doc).should be_within(24*3600).of(Time.utc(2000, 1, 1))
     end
+
+    it "supports xpath selectors" do
+      subject.options[:selectors] = "//span"
+      subject._parse(doc).should be_within(24*3600).of(Time.utc(2012, 3, 5, 22, 30))
+    end
   end
 
   describe "with russian locale" do
