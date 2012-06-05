@@ -35,7 +35,8 @@ module Harvester
         uid_from_sliced_params(url, [keep_params])
       when Array
         addressable = Addressable::URI.parse(url)
-        keep_params.sort.map {|key| addressable.query_values[key] }.compact.join("_")
+        query_values = addressable.query_values || {}
+        keep_params.sort.map {|key| query_values[key] }.compact.join("_")
       when :all
         url
       when :all_without_query
