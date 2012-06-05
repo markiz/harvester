@@ -7,9 +7,9 @@ Gem::Specification.new do |s|
   s.version     = Harvester::VERSION
   s.authors     = ["Mark Abramov"]
   s.email       = ["markizko@gmail.com"]
-  s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.homepage    = "https://github.com/markiz/harvester"
+  s.summary     = "DSL for extracting structured data from HTML."
+  s.description = "DSL for extracting structured data from HTML."
 
   s.rubyforge_project = "harvester"
 
