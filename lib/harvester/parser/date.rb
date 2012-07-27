@@ -5,7 +5,7 @@ module Harvester
         node.search(*selectors).map do |checked_node|
           if (match = match_any(checked_node.text, regex))
             time_string = prepare_time_string(match[regex_capture_group])
-            DateParser.parse(time_string, locale)
+            after_parse(checked_node, DateParser.parse(time_string, locale))
           end
         end.compact.first
       end

@@ -20,6 +20,12 @@ describe Harvester::Parser::Date do
       subject.options[:selectors] = "//span"
       subject._parse(doc).should be_within(24*3600).of(Time.utc(2012, 3, 5, 22, 30))
     end
+
+    it "allows for after_parse hook" do
+      time = Time.now - 3600*30
+      subject.options[:after_parse] = proc { time }
+      subject._parse(doc).should == time
+    end
   end
 
   describe "with russian locale" do
