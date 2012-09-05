@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'spec_helper'
 
 describe Harvester::Parser::Base do
@@ -36,6 +37,28 @@ describe Harvester::Parser::Base do
     it "returns last input arg when after hook is undefined" do
       subject = described_class.new(:test)
       subject.after_parse(1, {}).should == {}
+    end
+  end
+
+  describe "#node_text" do
+    it "converts text nodes to text" do
+      node = Nokogiri::HTML.fragment('Hello')
+      subject.node_text(node).should == 'Hello'
+    end
+
+    it "converts block elements to text with newlines" do
+      node = Nokogiri::HTML.fragment('LoL<p>Hello</p>')
+      subject.node_text(node).should == "LoL\nHello"
+    end
+
+    it "converts <br> to newlines" do
+      node = Nokogiri::HTML.fragment('lol<br><br>hello; world<br>yo')
+      subject.node_text(node).should == "lol\n\nhello; world\nyo"
+    end
+
+    it "should not pass through any html tags" do
+      node = Nokogiri::HTML.fragment('Пробую <b>Яндекс</b>.<b>Диск</b> — новый сервис от <b>Яндекса</b><p><a href="http://t.co/kErqTFbS" xhref="http://disk.yandex.ru">disk.yandex.ru</a>')
+      subject.node_text(node).should == "Пробую Яндекс.Диск — новый сервис от Яндекса\ndisk.yandex.ru"
     end
   end
 end

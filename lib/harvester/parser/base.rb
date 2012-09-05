@@ -1,6 +1,7 @@
 module Harvester
   class Parser
     class Base
+      BLOCK_ELEMENTS = %W(br div p ul ol li form table pre tbody thead tr td th).freeze
       attr_reader :name, :options
       def initialize(name, options = {})
         @name    = name
@@ -32,6 +33,15 @@ module Harvester
 
       def after_hook
         @after_hook ||= options[:after_parse]
+      end
+
+      def node_text(node)
+        separator = BLOCK_ELEMENTS.include?(node.name) ? "\n" : ""
+        if node.children.count > 0
+          separator + node.children.map {|c| node_text(c) }.join("")
+        else
+          separator + node.text
+        end
       end
 
       def default_options
