@@ -5,13 +5,13 @@ describe Harvester::DateParser do
     it "parses various formats of dates" do
       described_class.parse("15 Jan 2010 05:30").should be_within(24*3600).of(Time.utc(2010, 1, 15, 5, 30))
       described_class.parse("01/15/2010 05:30").should be_within(24*3600).of(Time.utc(2010, 1, 15, 5, 30))
-      described_class.parse("01-15-2010 05:30").should be_within(24*3600).of(Time.utc(2010, 1, 15, 5, 30))
-      described_class.parse("01-15-2010 - 05:30").should be_within(24*3600).of(Time.utc(2010, 1, 15, 5, 30))
+      described_class.parse("15-01-2010 05:30").should be_within(24*3600).of(Time.utc(2010, 1, 15, 5, 30))
+      described_class.parse("15-01-2010 - 05:30").should be_within(24*3600).of(Time.utc(2010, 1, 15, 5, 30))
     end
 
     it "doesn't return dates from the future" do
       now = Time.utc(2012, 2, 1)
-      Chronic.now = now
+      Time.stub(:now).and_return(now)
       described_class.parse("5 Jan").should be_within(24*3600).of(Time.utc(2012, 1, 5))
     end
 
