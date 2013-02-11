@@ -1,4 +1,11 @@
 # encoding: utf-8
+#
+# XXX: Passing :context => :past option to chronic parser
+#      doesn't help much.
+#
+# 1.9.3p327 :007 > Chronic.parse('15 Jan 2010 13:59', :context => :past)
+# 2010-01-14 13:59:00 +0300
+# see also 1 year old bug: https://github.com/mojombo/chronic/issues/60
 module Harvester
   module DateParser
     class Default
