@@ -4,12 +4,10 @@ module Harvester
       def _parse(node)
         links = LinkFinder.find_matching_links(node, selectors, link_regex)
         links.map! do |link|
-          url = link[:href].strip
-          sliced_url = UrlManipulations.url_with_sliced_params(url, uid_keep_params, keep_fragment)
-          sliced_uid = UrlManipulations.uid_from_sliced_params(url, uid_keep_params)
+          sliced_url = URLSlicer.call(link[:href].strip, uid_keep_params, keep_fragment)
           after_parse(link, {
-            :url => sliced_url,
-            :uid => sliced_uid
+            :url => sliced_url.url,
+            :uid => sliced_url.uid
           })
         end
         links.compact.uniq
