@@ -60,5 +60,10 @@ describe Harvester::Parser::Base do
       node = Nokogiri::HTML.fragment('Пробую <b>Яндекс</b>.<b>Диск</b> — новый сервис от <b>Яндекса</b><p><a href="http://t.co/kErqTFbS" xhref="http://disk.yandex.ru">disk.yandex.ru</a>')
       subject.node_text(node).should == "Пробую Яндекс.Диск — новый сервис от Яндекса\ndisk.yandex.ru"
     end
+
+    it "removes comments" do
+      node = Nokogiri::HTML.fragment('<!-- Hello, world! -->Waka-waka-waka')
+      subject.node_text(node).should_not include("Hello")
+    end
   end
 end

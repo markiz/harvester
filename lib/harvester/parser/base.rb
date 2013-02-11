@@ -40,7 +40,11 @@ module Harvester
         if node.children.count > 0
           separator + node.children.map {|c| node_text(c) }.join("")
         else
-          separator + node.text
+          if node.comment?
+            ''
+          else
+            separator + node.text
+          end
         end
       end
 
