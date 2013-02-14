@@ -1,7 +1,6 @@
 module Harvester
   class Parser
     class Base
-      BLOCK_ELEMENTS = %W(br div p ul ol li form table pre tbody thead tr td th).freeze
       attr_reader :name, :options
       def initialize(name, options = {})
         @name    = name
@@ -36,17 +35,7 @@ module Harvester
       end
 
       def node_text(node)
-        separator = BLOCK_ELEMENTS.include?(node.name) ? "\n" : ""
-        case
-        when node.name == "script"
-          ''
-        when node.comment?
-          ''
-        when node.children.count > 0
-          separator + node.children.map {|c| node_text(c) }.join("")
-        else
-          separator + node.text
-        end
+        Util::TextExtractor.call(node)
       end
 
       def default_options
