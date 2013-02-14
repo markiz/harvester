@@ -37,14 +37,15 @@ module Harvester
 
       def node_text(node)
         separator = BLOCK_ELEMENTS.include?(node.name) ? "\n" : ""
-        if node.children.count > 0
+        case
+        when node.name == "script"
+          ''
+        when node.comment?
+          ''
+        when node.children.count > 0
           separator + node.children.map {|c| node_text(c) }.join("")
         else
-          if node.comment?
-            ''
-          else
-            separator + node.text
-          end
+          separator + node.text
         end
       end
 

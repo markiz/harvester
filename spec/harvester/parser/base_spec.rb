@@ -65,5 +65,10 @@ describe Harvester::Parser::Base do
       node = Nokogiri::HTML.fragment('<!-- Hello, world! -->Waka-waka-waka')
       subject.node_text(node).should_not include("Hello")
     end
+
+    it "removes scripts" do
+      node = Nokogiri::HTML.fragment('<div><script type="text/javascript">alert(1);</script>Hello, world</div>')
+      subject.node_text(node).should_not include("alert")
+    end
   end
 end
