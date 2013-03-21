@@ -1,5 +1,3 @@
-require 'addressable/uri'
-
 module Harvester
   class Parser
     class Link < Links
