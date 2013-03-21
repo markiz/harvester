@@ -1,6 +1,7 @@
 require 'nokogiri'
 require 'harvester/parser/base'
 require 'harvester/parser/element'
+require 'harvester/parser/elements'
 require 'harvester/parser/text'
 require 'harvester/parser/children'
 require 'harvester/parser/child'
@@ -33,6 +34,7 @@ module Harvester
 
     PARSER_NODES_MAP = {
       :element        => Element,
+      :elements       => Elements,
       :children       => Children,
       :child          => Child,
       :links          => Links,
