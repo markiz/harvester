@@ -43,6 +43,7 @@ describe Harvester do
         author
       end
     end
+
     subject do
       Harvester::Parser.new do |p|
         p.element :title, :selectors => "h2 > a"

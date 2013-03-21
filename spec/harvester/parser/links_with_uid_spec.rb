@@ -48,5 +48,19 @@ describe Harvester::Parser::LinksWithUid do
         :uid => "32"
       })
     end
+
+    it "ignores non-http(s) links by default" do
+      subject = described_class.new(:forum)
+      html = Nokogiri::HTML("<a href='javascript:void()'>forum</a>")
+      subject._parse(html).should be_empty
+    end
+
+    it "ignores invalid links" do
+      subject = described_class.new(:forum)
+      html = Nokogiri::HTML("<a href='http://http://example.com/123'>")
+      subject._parse(html).should be_empty
+      html = Nokogiri::HTML("<a href='::'>")
+      subject._parse(html).should be_empty
+    end
   end
 end

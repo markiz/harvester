@@ -8,6 +8,10 @@ module Util
     BLOCK_ELEMENTS = %W(br div p ul ol li form table pre tbody thead tr td th).freeze
 
     def self.call(node)
+      new.call(node)
+    end
+
+    def call(node)
       separator = BLOCK_ELEMENTS.include?(node.name) ? "\n" : ''
       case
       when node.name == 'script'

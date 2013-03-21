@@ -2,12 +2,12 @@ module Harvester
   class Parser
     class Date < Base
       def _parse(node)
-        node.search(*selectors).map do |checked_node|
+        node.search(*selectors).map {|checked_node|
           if (match = match_any(checked_node.text, regex))
             time_string = prepare_time_string(match[regex_capture_group])
-            after_parse(checked_node, DateParser.parse(time_string, locale))
+            after_parse(checked_node, DateParser.call(time_string, locale))
           end
-        end.compact.first
+        }.compact.first
       end
 
       def default_options

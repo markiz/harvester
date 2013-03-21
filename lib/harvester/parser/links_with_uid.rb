@@ -2,15 +2,17 @@ module Harvester
   class Parser
     class LinksWithUid < Links
       def _parse(node)
-        links = LinkFinder.find_matching_links(node, selectors, link_regex)
-        links.map! do |link|
+        links = link_finder.call(node).map {|link|
           sliced_url = URLSlicer.call(link[:href].strip, uid_keep_params, keep_fragment)
           after_parse(link, {
             :url => sliced_url.url,
             :uid => sliced_url.uid
           })
-        end
-        links.compact.uniq
+        }.compact.uniq
+      end
+
+      def link_finder
+        @link_finder ||= LinkFinder.new(selectors, link_regex, LinkValidator.new(schemes))
       end
 
       def default_options
@@ -18,7 +20,8 @@ module Harvester
           :uid_keep_params => :all,
           :link_regex      => /.+/,
           :selectors       => "a",
-          :keep_fragment   => false
+          :keep_fragment   => false,
+          :schemes         => ["http", "https"]
         }
       end
 
@@ -28,6 +31,10 @@ module Harvester
 
       def keep_fragment
         options[:keep_fragment]
+      end
+
+      def schemes
+        options[:schemes]
       end
     end
   end
