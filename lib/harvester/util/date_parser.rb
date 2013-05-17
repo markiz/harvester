@@ -58,6 +58,12 @@ module Harvester
       end
     end
 
+    class Kz < Ru
+      def locale
+        :kz
+      end
+    end
+
     class <<self
       def call(string, locale = :default)
         require 'chronic18n'
