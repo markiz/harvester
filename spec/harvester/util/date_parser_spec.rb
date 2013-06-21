@@ -20,6 +20,10 @@ describe Harvester::DateParser do
       described_class.parse("   ").should be_nil
       described_class.parse(nil).should be_nil
     end
+
+    it "can handle timestamps" do
+      described_class.parse("1368605303").should be_within(24*3600).of(Time.utc(2013, 5, 15))
+    end
   end
 
   describe "with :ru locale" do

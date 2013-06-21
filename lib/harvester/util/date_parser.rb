@@ -11,13 +11,20 @@ module Harvester
     class Default
       def call(string)
         string = prepare_time_string(string)
-        result = parse_with_chronic(string) || parse_with_stdlib(string)
+        result = parse_timestamp(string) || parse_with_chronic(string) || parse_with_stdlib(string)
         if result && result.year > Time.now.year
           result = Time.mktime(Time.now.year, result.month, result.day, result.hour, result.min, result.sec)
         end
         result
       end
       alias_method :parse, :call
+
+      def parse_timestamp(string)
+        # check that string is numeric and is between 1990 and 2030
+        if string =~ /\A\d+\z/ && string.to_i >= 631152000 && string.to_i <= 1893456000
+          Time.at(string.to_i)
+        end
+      end
 
       def parse_with_chronic(string)
         Chronic18n.parse(string, locale)
